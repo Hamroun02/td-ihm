@@ -3,9 +3,8 @@
 Système testé : <https://www.saucedemo.com>
 
 ## Binôme
-
-- Adem HAMROUN
-- Yungao BAO
+*   Étudiant·e 1 : **Adem HAMROUN**
+*   Étudiant·e 2 : **Yungao BAO**
 
 ## Lancer les tests
 
