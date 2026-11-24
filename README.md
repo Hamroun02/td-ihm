@@ -335,7 +335,7 @@ Nous avons dirigé l'agent **étape par étape**, en validant chaque étape avan
 
   
 
-## 5. Nos prompts (extraits)
+## 5. Nos prompts 
 
 Voici nos principaux prompts, dans l'ordre où nous les avons envoyés à l'agent (orthographe corrigée, sens inchangé).
 
