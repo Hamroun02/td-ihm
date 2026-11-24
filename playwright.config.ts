@@ -21,15 +21,27 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  /* Rapports : liste dans le terminal, rapport HTML (npm run report) et résultats JSON lisibles par un outil. */
+  reporter: [
+    ['list'],
+    ['html', { open: 'never' }],
+    ['json', { outputFile: 'resultats-tests.json' }],
+  ],
+  /* Les perceptions attendent jusqu'à 10 s : performance_glitch_user met environ 5 s à se connecter. */
+  expect: { timeout: 10_000 },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+    baseURL: 'https://www.saucedemo.com',
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    /* SauceDemo identifie ses éléments avec l'attribut data-test (et non data-testid) :
+       page.getByTestId('login-button') cible donc [data-test="login-button"]. */
+    testIdAttribute: 'data-test',
+
+    /* Trace conservée quand un test échoue (npx playwright show-trace). See https://playwright.dev/docs/trace-viewer */
+    trace: 'retain-on-failure',
+    /* Capture d'écran quand un test échoue, pour comprendre pourquoi. */
+    screenshot: 'only-on-failure',
   },
 
   /* Configure projects for major browsers */
@@ -39,15 +51,7 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    /* Firefox et WebKit retirés : les tests e2e sont longs, un seul navigateur suffit pour ce TD. */
 
     /* Test against mobile viewports. */
     // {
